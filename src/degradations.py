@@ -36,8 +36,8 @@ def apply_motion_blur(image, kernel_size = 13, angle = 0):
 
 def main():
     input_path = '../data/val2017'
-    gaussian_degraded_output_dir = './data/degraded_output/gaussian_noise'
-    motion_degraded_output_dir = './data/degraded_output/motion_blur'
+    gaussian_degraded_output_dir = '../data/degraded_output/gaussian_noise'
+    motion_degraded_output_dir = '../data/degraded_output/motion_blur'
     os.makedirs(gaussian_degraded_output_dir, exist_ok=True)
     os.makedirs(motion_degraded_output_dir, exist_ok=True)
 
@@ -46,18 +46,18 @@ def main():
     noisy_image_med = add_gaussian_noise(img1, 0, 25)
     noisy_image_high = add_gaussian_noise(img1, 0, 50)
 
-    skimage.io.imsave(f'{gaussian_degraded_output_dir}/noisy_image_low.jpg', noisy_image_low)
-    skimage.io.imsave(f'{gaussian_degraded_output_dir}/noisy_image_med.jpg', noisy_image_med)
-    skimage.io.imsave(f'{gaussian_degraded_output_dir}/noisy_image_high.jpg', noisy_image_high)
+    skimage.io.imsave(f'{gaussian_degraded_output_dir}/noisy_image_low.png', noisy_image_low)
+    skimage.io.imsave(f'{gaussian_degraded_output_dir}/noisy_image_med.png', noisy_image_med)
+    skimage.io.imsave(f'{gaussian_degraded_output_dir}/noisy_image_high.png', noisy_image_high)
 
     img2 = skimage.io.imread(f"{input_path}/000000000785.jpg")
     motion_blurred_image_hor = apply_motion_blur(img2, 13, 0)
     motion_blurred_image_ver = apply_motion_blur(img2, 13, 90)
     motion_blurred_image_dia = apply_motion_blur(img2, 13, 45)
 
-    skimage.io.imsave(f'{motion_degraded_output_dir}/motion_blurred_image_hor.jpg', motion_blurred_image_hor)
-    skimage.io.imsave(f'{motion_degraded_output_dir}/motion_blurred_image_ver.jpg', motion_blurred_image_ver)
-    skimage.io.imsave(f'{motion_degraded_output_dir}/motion_blurred_image_dia.jpg', motion_blurred_image_dia)
+    skimage.io.imsave(f'{motion_degraded_output_dir}/motion_blurred_image_hor.png', motion_blurred_image_hor)
+    skimage.io.imsave(f'{motion_degraded_output_dir}/motion_blurred_image_ver.png', motion_blurred_image_ver)
+    skimage.io.imsave(f'{motion_degraded_output_dir}/motion_blurred_image_dia.png', motion_blurred_image_dia)
 
     return
 

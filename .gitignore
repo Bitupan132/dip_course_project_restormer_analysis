@@ -2,4 +2,6 @@
 /data/val2017
 /data/annotations
 /dip_project_env
+/src/Denoising/pretrained_models
+/src/Motion_Deblurring/pretrained_models
 .DS_Store

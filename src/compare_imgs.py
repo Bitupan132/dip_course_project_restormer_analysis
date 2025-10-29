@@ -7,7 +7,7 @@ from skimage.metrics import structural_similarity as ssim
 
 def main():
 
-    degraded_path = '../data/degraded_output/gaussian_noise/noisy_image_med.jpg'
+    degraded_path = '../data/degraded_output/gaussian_noise/noisy_image_med.png'
     restored_path = '../data/restored_output/gaussian_denoise/noisy_image_med.png'
     original_path = '../data/val2017/000000000776.jpg'
 
@@ -33,7 +33,7 @@ def main():
     print(f"PSNR (Original, Restored): {psnr_org_res}")
     print(f"SSIM (Original, Restored): {ssim_org_res}")
 
-    diff = restored_img - degraded_img
+    diff = degraded_img- restored_img
     diff = np.clip(diff, 0, 255).astype(np.uint8)
 
     plt.figure(figsize=(12,8))
