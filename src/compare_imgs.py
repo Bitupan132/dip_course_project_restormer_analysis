@@ -7,7 +7,7 @@ import configs
 
 
 def main():
-    
+
     original_path = f'{configs.ORIGINAL_IMG_DIR}/000000000776.png'
     degraded_path = f'{configs.DEGRADED_NOISE_DIR}/noisy_image_med.png'
     restored_path = f'{configs.RESTORED_NOISE_DIR}/noisy_image_med.png'
@@ -34,24 +34,24 @@ def main():
     print(f"PSNR (Original, Restored): {psnr_org_res}")
     print(f"SSIM (Original, Restored): {ssim_org_res}")
 
-    diff = degraded_img- restored_img
-    diff = np.clip(diff, 0, 255).astype(np.uint8)
+    # diff = degraded_img- restored_img
+    # diff = np.clip(diff, 0, 255).astype(np.uint8)
 
-    plt.figure(figsize=(12,8))
+    # plt.figure(figsize=(12,8))
 
-    plt.subplot(131)
-    plt.title("degraded")
-    plt.imshow(degraded_img)
+    # plt.subplot(131)
+    # plt.title("degraded")
+    # plt.imshow(degraded_img)
 
-    plt.subplot(132)
-    plt.title("restored")
-    plt.imshow(restored_img)
+    # plt.subplot(132)
+    # plt.title("restored")
+    # plt.imshow(restored_img)
 
-    plt.subplot(133)
-    plt.title("diff")
-    plt.imshow(diff)
+    # plt.subplot(133)
+    # plt.title("diff")
+    # plt.imshow(diff)
 
-    plt.show()
+    # plt.show()
 
     return
 if __name__ == '__main__':

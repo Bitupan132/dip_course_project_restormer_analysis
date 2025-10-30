@@ -13,7 +13,6 @@ def convert_val2017_to_png():
     os.makedirs(output_dir, exist_ok=True)
 
     jpg_files = glob.glob(os.path.join(input_dir, '*.jpg'))
-    # jpg_files = glob.glob(os.path.join(input_dir, '000000000785.jpg'))
     
     print(f"\nFound {len(jpg_files)} JPG images to convert.")
 
