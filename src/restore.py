@@ -22,10 +22,11 @@ from tqdm import tqdm
 import argparse
 from pdb import set_trace as stx
 import numpy as np
+import configs
 
 parser = argparse.ArgumentParser(description='Test Restormer on your own images')
-parser.add_argument('--input_dir', default='../data/degraded_output/', type=str, help='Directory of input images or path of single image')
-parser.add_argument('--result_dir', default='../data/restored_output/', type=str, help='Directory for restored results')
+parser.add_argument('--input_dir', default=configs.DEGRADED_IMAGES_DIR, type=str, help='Directory of input images or path of single image')
+parser.add_argument('--result_dir', default=configs.RESTORED_IMAGES_DIR, type=str, help='Directory for restored results')
 parser.add_argument('--task', required=True, type=str, help='Task to run', choices=['Motion_Deblurring','Gaussian_Color_Denoising'])
 parser.add_argument('--sigma', default=None, type=str, help='Sigma value for non-blind denoising.')
 

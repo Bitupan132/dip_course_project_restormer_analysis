@@ -3,13 +3,14 @@ import skimage.io
 from matplotlib import pyplot as plt
 from skimage.metrics import peak_signal_noise_ratio as psnr
 from skimage.metrics import structural_similarity as ssim
+import configs
 
 
 def main():
-
-    degraded_path = '../data/degraded_output/gaussian_noise/noisy_image_med.png'
-    restored_path = '../data/restored_output/gaussian_denoise/noisy_image_med.png'
-    original_path = '../data/val2017/000000000776.jpg'
+    
+    original_path = f'{configs.ORIGINAL_IMG_DIR}/000000000776.png'
+    degraded_path = f'{configs.DEGRADED_NOISE_DIR}/noisy_image_med.png'
+    restored_path = f'{configs.RESTORED_NOISE_DIR}/noisy_image_med.png'
 
     degraded_img = skimage.io.imread(degraded_path)
     restored_img = skimage.io.imread(restored_path)

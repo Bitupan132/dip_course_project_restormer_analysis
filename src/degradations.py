@@ -1,11 +1,17 @@
 import numpy as np
 import cv2
-import skimage.io
+from PIL import Image
 from matplotlib import pyplot as plt
 import os
+import configs
 
-def add_gaussian_noise(image, mean = 0, sigma = 25):
-    print(image.shape)
+def custom_pil_imread(filepath):
+    pil_img = Image.open(filepath)
+    if pil_img.mode != 'RGB':
+        pil_img = pil_img.convert('RGB')
+    return np.array(pil_img)
+    
+def add_gaussian_noise(image, mean = configs.MEAN, sigma = configs.SIGMA_MED):
     row, col, ch = image.shape
 
     gaussian_noise = np.random.normal(mean, sigma, (row, col, ch))
@@ -13,9 +19,9 @@ def add_gaussian_noise(image, mean = 0, sigma = 25):
     noisy_image = image + gaussian_noise
     noisy_image = np.clip(noisy_image, 0, 255).astype(np.uint8)
 
-    return noisy_image
+    return Image.fromarray(noisy_image)
 
-def apply_motion_blur(image, kernel_size = 13, angle = 0):
+def apply_motion_blur(image, kernel_size = configs.BLUR_KERNEL_SIZE, angle = configs.BLUR_ANLGE_HORIZONTAL):
     # angle 0: horizontal motion blur
     # angle 90: vertical motion blur
 
@@ -32,32 +38,21 @@ def apply_motion_blur(image, kernel_size = 13, angle = 0):
 
     blurred_image = cv2.filter2D(image, -1, motion_blur_kernel)
 
-    return blurred_image
+    return Image.fromarray(blurred_image)
 
 def main():
-    input_path = '../data/val2017'
-    gaussian_degraded_output_dir = '../data/degraded_output/gaussian_noise'
-    motion_degraded_output_dir = '../data/degraded_output/motion_blur'
-    os.makedirs(gaussian_degraded_output_dir, exist_ok=True)
-    os.makedirs(motion_degraded_output_dir, exist_ok=True)
+    os.makedirs(configs.DEGRADED_NOISE_DIR, exist_ok=True)
+    os.makedirs(configs.DEGRADED_BLUR_DIR, exist_ok=True)
 
-    img1 = skimage.io.imread(f"{input_path}/000000000776.jpg")
-    noisy_image_low = add_gaussian_noise(img1, 0, 15)
-    noisy_image_med = add_gaussian_noise(img1, 0, 25)
-    noisy_image_high = add_gaussian_noise(img1, 0, 50)
+    img1 = custom_pil_imread(f"{configs.ORIGINAL_IMG_DIR}/000000000776.png")
+    add_gaussian_noise(img1, configs.MEAN, configs.SIGMA_LOW).save(f'{configs.DEGRADED_NOISE_DIR}/noisy_image_low.png')
+    add_gaussian_noise(img1, configs.MEAN, configs.SIGMA_MED).save(f'{configs.DEGRADED_NOISE_DIR}/noisy_image_med.png')
+    add_gaussian_noise(img1, configs.MEAN, configs.SIGMA_HIGH).save(f'{configs.DEGRADED_NOISE_DIR}/noisy_image_high.png')
 
-    skimage.io.imsave(f'{gaussian_degraded_output_dir}/noisy_image_low.png', noisy_image_low)
-    skimage.io.imsave(f'{gaussian_degraded_output_dir}/noisy_image_med.png', noisy_image_med)
-    skimage.io.imsave(f'{gaussian_degraded_output_dir}/noisy_image_high.png', noisy_image_high)
-
-    img2 = skimage.io.imread(f"{input_path}/000000000785.jpg")
-    motion_blurred_image_hor = apply_motion_blur(img2, 13, 0)
-    motion_blurred_image_ver = apply_motion_blur(img2, 13, 90)
-    motion_blurred_image_dia = apply_motion_blur(img2, 13, 45)
-
-    skimage.io.imsave(f'{motion_degraded_output_dir}/motion_blurred_image_hor.png', motion_blurred_image_hor)
-    skimage.io.imsave(f'{motion_degraded_output_dir}/motion_blurred_image_ver.png', motion_blurred_image_ver)
-    skimage.io.imsave(f'{motion_degraded_output_dir}/motion_blurred_image_dia.png', motion_blurred_image_dia)
+    img2 = custom_pil_imread(f"{configs.ORIGINAL_IMG_DIR}/000000000785.png")
+    apply_motion_blur(img2, configs.BLUR_KERNEL_SIZE, configs.BLUR_ANLGE_HORIZONTAL).save(f'{configs.DEGRADED_BLUR_DIR}/motion_blurred_image_hor.png')
+    apply_motion_blur(img2, configs.BLUR_KERNEL_SIZE, configs.BLUR_ANGLE_VERTICAL).save(f'{configs.DEGRADED_BLUR_DIR}/motion_blurred_image_ver.png')
+    apply_motion_blur(img2, configs.BLUR_KERNEL_SIZE, configs.BLUR_ANGLE_DIAGONAL).save(f'{configs.DEGRADED_BLUR_DIR}/motion_blurred_image_dia.png')
 
     return
 
