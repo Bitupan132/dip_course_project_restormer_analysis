@@ -73,7 +73,7 @@ if len(files) == 0:
 parameters = {'inp_channels':3, 'out_channels':3, 'dim':48, 'num_blocks':[4,6,6,8], 'num_refinement_blocks':4, 'heads':[1,2,4,8], 'ffn_expansion_factor':2.66, 'bias':False, 'LayerNorm_type':'WithBias', 'dual_pixel_task':False}
 weights, parameters = get_weights_and_parameters(task, parameters, sigma)
 
-load_arch = run_path(os.path.join('basicsr', 'models', 'archs', 'restormer_arch.py'))
+load_arch = run_path(os.path.join('restormer', 'models', 'archs', 'restormer_arch.py'))
 model = load_arch['Restormer'](**parameters)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
