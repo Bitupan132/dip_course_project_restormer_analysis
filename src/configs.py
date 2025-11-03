@@ -15,8 +15,15 @@ ORIGINAL_IMG_DIR = os.path.join(DATA_DIR, 'original_images')
 
 # --- 3. Degraded Data Paths ---
 DEGRADED_IMAGES_DIR = os.path.join(DATA_DIR, 'degraded_images')
-DEGRADED_NOISE_DIR = os.path.join(DEGRADED_IMAGES_DIR, 'gaussian_noise')
-DEGRADED_BLUR_DIR = os.path.join(DEGRADED_IMAGES_DIR, 'motion_blur')
+DEGRADED_NOISE_LOW_DIR = os.path.join(DEGRADED_IMAGES_DIR, 'gaussian_noise_low')
+DEGRADED_NOISE_MED_DIR = os.path.join(DEGRADED_IMAGES_DIR, 'gaussian_noise_med')
+DEGRADED_NOISE_HIGH_DIR = os.path.join(DEGRADED_IMAGES_DIR, 'gaussian_noise_high')
+DEGRADED_BLUR_LOW_HOR_DIR = os.path.join(DEGRADED_IMAGES_DIR, 'motion_blur_low_hor')
+DEGRADED_BLUR_LOW_VER_DIR = os.path.join(DEGRADED_IMAGES_DIR, 'motion_blur_low_ver')
+DEGRADED_BLUR_MED_HOR_DIR = os.path.join(DEGRADED_IMAGES_DIR, 'motion_blur_med_hor')
+DEGRADED_BLUR_MED_VER_DIR = os.path.join(DEGRADED_IMAGES_DIR, 'motion_blur_med_ver')
+DEGRADED_BLUR_HIGH_HOR_DIR = os.path.join(DEGRADED_IMAGES_DIR, 'motion_blur_high_hor')
+DEGRADED_BLUR_HIGH_VER_DIR = os.path.join(DEGRADED_IMAGES_DIR, 'motion_blur_high_ver')
 
 # --- 4. Restored Data Paths ---
 RESTORED_IMAGES_DIR = os.path.join(DATA_DIR, 'restored_images')
@@ -30,15 +37,20 @@ SIGMA_MED = 25
 SIGMA_HIGH = 50
 BLUR_ANLGE_HORIZONTAL = 0
 BLUR_ANGLE_VERTICAL = 90
-BLUR_ANGLE_DIAGONAL = 45
-BLUR_KERNEL_SIZE = 13
+BLUR_KERNEL_LOW = 3
+BLUR_KERNEL_MED = 9
+BLUR_KERNEL_HIGH = 15
 
 # --- 6. YAML File Paths for evaluation  ---
-ORIGINAL_YAML = '../data/original_validation.yaml'
-DEGRADED_NOISE_YAML = '../data/degraded_noise_validation.yaml'
-RESTORED_NOISE_YAML = '../data/restored_noise_validation.yaml'
+ORIGINAL_YAML = '../data/dataset_yaml/original_validation.yaml'
+DEGRADED_NOISE_YAML = '../data/dataset_yaml/degraded_noise_validation.yaml'
+RESTORED_NOISE_YAML = '../data/dataset_yaml/restored_noise_validation.yaml'
 DEGRADED_BLUR_YAML = '../data/dataset_yaml/degraded_blur_validation.yaml'
-RESTORED_BLUR_YAML = '../data/restored_blur_validation.yaml'
+RESTORED_BLUR_YAML = '../data/dataset_yaml/restored_blur_validation.yaml'
+
+# CREATE DATASET:
+# python create_degraded_datasets.py --type 'noise_low'
+# python create_degraded_datasets.py --type 'blur_low_hor'
 
 # Motion Deblur:
 # python restore.py --task Motion_Deblurring --input_dir '../data/degraded_images/motion_blur/' --result_dir '../data/restored_images/motion_deblur/'
