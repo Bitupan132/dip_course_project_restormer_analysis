@@ -44,15 +44,20 @@ def run_evaluation():
         print("\n--- Running evaluation on RESTORED (BLUR) images ---")
 
     print(f"Using config file: {yaml_file}")
-    model.val(
+    results = model.val(
         data=yaml_file,
+        project=output_project_dir,
+        name=output_name,
         imgsz=640,
         split='val',
-        project=output_project_dir,
-        name=output_name
+        save_json=True,
+        plots=True,
+        verbose=True
     )
 
     print("\n--- Evaluation complete! ---")
+    print(f"mAP50: {results.box.map50}")
+    print(f"mAP50-95: {results.box.map}")
     print(f"Results are saved in: {output_project_dir}/{output_name}")
 
 if __name__ == "__main__":

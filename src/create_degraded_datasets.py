@@ -47,11 +47,11 @@ def main():
     img1 = custom_pil_imread(f"{configs.ORIGINAL_IMG_DIR}/000000000776.png")
     img2 = custom_pil_imread(f"{configs.ORIGINAL_IMG_DIR}/000000000785.png")
 
-    add_gaussian_noise(img1, configs.MEAN, configs.SIGMA_LOW).save(f'{configs.DEGRADED_NOISE_DIR}/000000000776.jpg')
-    add_gaussian_noise(img2, configs.MEAN, configs.SIGMA_MED).save(f'{configs.DEGRADED_NOISE_DIR}/000000000785.jpg')
+    add_gaussian_noise(img1, configs.MEAN, configs.SIGMA_LOW).save(f'{configs.DEGRADED_NOISE_DIR}/000000000776.png', format= 'PNG')
+    add_gaussian_noise(img2, configs.MEAN, configs.SIGMA_MED).save(f'{configs.DEGRADED_NOISE_DIR}/000000000785.png', format= 'PNG')
 
-    apply_motion_blur(img1, configs.BLUR_KERNEL_SIZE, configs.BLUR_ANLGE_HORIZONTAL).save(f'{configs.DEGRADED_BLUR_DIR}/000000000776.jpg')
-    apply_motion_blur(img2, configs.BLUR_KERNEL_SIZE, configs.BLUR_ANGLE_VERTICAL).save(f'{configs.DEGRADED_BLUR_DIR}/000000000785.jpg')
+    apply_motion_blur(img1, configs.BLUR_KERNEL_SIZE, configs.BLUR_ANLGE_HORIZONTAL).save(f'{configs.DEGRADED_BLUR_DIR}/000000000776.png', format= 'PNG')
+    apply_motion_blur(img2, configs.BLUR_KERNEL_SIZE, configs.BLUR_ANGLE_VERTICAL).save(f'{configs.DEGRADED_BLUR_DIR}/000000000785.png', format= 'PNG')
 
     return
 

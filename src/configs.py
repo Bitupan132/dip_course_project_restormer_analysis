@@ -37,7 +37,7 @@ BLUR_KERNEL_SIZE = 13
 ORIGINAL_YAML = '../data/original_validation.yaml'
 DEGRADED_NOISE_YAML = '../data/degraded_noise_validation.yaml'
 RESTORED_NOISE_YAML = '../data/restored_noise_validation.yaml'
-DEGRADED_BLUR_YAML = '../data/degraded_blur_validation.yaml'
+DEGRADED_BLUR_YAML = '../data/dataset_yaml/degraded_blur_validation.yaml'
 RESTORED_BLUR_YAML = '../data/restored_blur_validation.yaml'
 
 # Motion Deblur:
