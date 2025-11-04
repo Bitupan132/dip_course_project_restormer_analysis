@@ -1,6 +1,8 @@
-/data
 /data/val2017
-/data/annotations
+/data/degraded_images
+/data/restored_images
+/data/original_images
+/data/detection_output
 /dip_project_env
 /src/Denoising/pretrained_models
 /src/Motion_Deblurring/pretrained_models

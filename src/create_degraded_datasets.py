@@ -76,8 +76,6 @@ def create_degraded_dataset():
 
     print(f"\nFound {len(original_image_paths)} images to degrade.")
 
-    i = 1
-
     for image_path in tqdm(original_image_paths, desc=f"Processing {args.type}."):
         img = custom_pil_imread(image_path)
 

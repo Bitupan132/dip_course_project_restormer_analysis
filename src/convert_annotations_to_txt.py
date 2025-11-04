@@ -3,6 +3,7 @@ import os
 import argparse
 from pathlib import Path
 import configs
+import glob
 
 # COCO 80 class category IDs (not contiguous!)
 COCO_80_CATEGORY_IDS = [
@@ -13,7 +14,7 @@ COCO_80_CATEGORY_IDS = [
     85, 86, 87, 88, 89, 90
 ]
 
-def convert_coco_to_yolo(images_dir, output_dir):
+def convert_coco_to_yolo(images_dir):
 
     # Load COCO annotations
     coco_json_path = configs.COCO_JSON_PATH
@@ -28,14 +29,14 @@ def convert_coco_to_yolo(images_dir, output_dir):
     
     print(f"Category mapping created: {len(coco_id_to_yolo_id)} classes")
     
-    # Create output directory
-    os.makedirs(output_dir, exist_ok=True)
-    print(f"Output directory: {output_dir}")
+    # # Create output directory
+    # os.makedirs(images_dir, exist_ok=True)
+    # print(f"Output directory: {images_dir}")
     
     # Create mappings
     image_id_to_filename = {img['id']: img['file_name'] for img in coco_data['images']}
     image_id_to_size = {img['id']: (img['width'], img['height']) for img in coco_data['images']}
-    
+
     # Group annotations by image_id
     annotations_by_image = {}
     for ann in coco_data['annotations']:
@@ -43,9 +44,10 @@ def convert_coco_to_yolo(images_dir, output_dir):
         if img_id not in annotations_by_image:
             annotations_by_image[img_id] = []
         annotations_by_image[img_id].append(ann)
-    
+
     # Get list of images in the images_dir
-    image_files = set(os.listdir(images_dir))
+    image_files = {os.path.basename(f) for f in glob.glob(os.path.join(images_dir, '*.png'))}
+    print(f"\nTotal images in input directory: {len(image_files)}")
     
     converted_count = 0
     skipped_count = 0
@@ -53,17 +55,18 @@ def convert_coco_to_yolo(images_dir, output_dir):
     # Convert each image's annotations
     for img_id, annotations in annotations_by_image.items():
         filename = image_id_to_filename[img_id]
-        
-        # Check if this image exists in the images_dir
-        if filename not in image_files:
+
+        filename_png = filename.split('.')[0] + '.png'
+
+        if filename_png not in image_files:
             skipped_count += 1
             continue
-            
+
         img_width, img_height = image_id_to_size[img_id]
         
         # Create label file
         label_filename = Path(filename).stem + '.txt'
-        label_path = os.path.join(output_dir, label_filename)
+        label_path = os.path.join(images_dir, label_filename)
         
         with open(label_path, 'w') as f:
             for ann in annotations:
@@ -88,15 +91,14 @@ def convert_coco_to_yolo(images_dir, output_dir):
         
         converted_count += 1
     
-    print(f"\nConversion complete!")
     print(f"Converted: {converted_count} images")
     print(f"Skipped: {skipped_count} images (not found in images directory)")
+    print(f"\nConversion complete!")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert COCO JSON to YOLO format")
     parser.add_argument('--images_dir', required=True, help='Directory containing the images')
-    parser.add_argument('--output_dir', required=True, help='Output directory for label txt files')
     
     args = parser.parse_args()
     
-    convert_coco_to_yolo(args.images_dir, args.output_dir)
+    convert_coco_to_yolo(args.images_dir)
