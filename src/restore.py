@@ -76,7 +76,15 @@ weights, parameters = get_weights_and_parameters(task, parameters, sigma)
 load_arch = run_path(os.path.join('restormer', 'models', 'archs', 'restormer_arch.py'))
 model = load_arch['Restormer'](**parameters)
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+if torch.backends.mps.is_available():
+    device = torch.device('mps')
+elif torch.cuda.is_available():
+    device = torch.device('cuda')
+else:
+    device = torch.device('cpu')
+
+print(f"Using device: {device}")
 model.to(device)
 
 checkpoint = torch.load(weights, map_location=torch.device('cpu'))

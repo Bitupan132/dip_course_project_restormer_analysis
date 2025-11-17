@@ -3,6 +3,9 @@
 /data/restored_images
 /data/original_images
 /data/detection_output
+/data/original_images.cache
+/data/original_images.tar.gz
+/src/yolov8s.pt
 /dip_project_env
 /src/Denoising/pretrained_models
 /src/Motion_Deblurring/pretrained_models
